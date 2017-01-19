@@ -13,7 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by yiyi on 2016/12/27.
  */
 
-public class Networks {
+public class Networks
+{
 
     private static final int DEFAULT_TIMEOUT = 5;
 
@@ -27,26 +28,25 @@ public class Networks {
 
     private static Networks mNetworks;
 
-    public static Networks getInstance() {
-        if (mNetworks == null) {
+    public static Networks getInstance()
+    {
+        if (mNetworks == null)
+        {
             mNetworks = new Networks();
         }
         return mNetworks;
     }
 
-    public CommonApi getCommonApi() {
-        return mCommonApi == null ? configRetrofit(CommonApi.class) : mCommonApi;
+    private OkHttpClient configClient()
+    {
+        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggerInterceptor())
+                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        return okHttpClient.build();
     }
 
-    public CommentsApi getCommentsApi() {
-        return mCommentsApi == null ? configRetrofit(CommentsApi.class) : mCommentsApi;
-    }
-
-    public ThemeApi getThemeApi() {
-        return mThemeApi == null ? configRetrofit(ThemeApi.class) : mThemeApi;
-    }
-
-    private <T> T configRetrofit(Class<T> service) {
+    private <T> T configRetrofit(Class<T> service)
+    {
         retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_BASE_URL)
                 .client(configClient())
@@ -56,10 +56,19 @@ public class Networks {
         return retrofit.create(service);
     }
 
-    private OkHttpClient configClient() {
-        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        return okHttpClient.build();
+    public CommentsApi getCommentsApi()
+    {
+        return mCommentsApi == null ? configRetrofit(CommentsApi.class) : mCommentsApi;
+    }
+
+    public CommonApi getCommonApi()
+    {
+        return mCommonApi == null ? configRetrofit(CommonApi.class) : mCommonApi;
+    }
+
+    public ThemeApi getThemeApi()
+    {
+        return mThemeApi == null ? configRetrofit(ThemeApi.class) : mThemeApi;
     }
 
 }

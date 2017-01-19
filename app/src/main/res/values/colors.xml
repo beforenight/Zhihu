@@ -12,7 +12,8 @@
     <color name="colorlittleGray">#C7C7C7</color>
     <color name="colorSplashBackground">#17181A</color>
     <color name="colorDefination">#00FFFF</color>
-    
+    <color name="colorLoginInfo">#52BDEA</color>
+
     <color name="colorDayPrimary">#00A2ED</color>
     <color name="colorDayPrimaryDark">#008FD2</color>
     <color name="colorDayAccent">#008FD2</color>
